@@ -15,7 +15,7 @@ Here, we pull projectile data from a known system that was solved numerically us
 
  * $v$= 30 m/s
  * $\theta$ = $70^\circ$
- * $g$ = 9.8 m$/s^2$
+ * $g$ = 9.8 m/$s^2$
  * The combination of $v$ and $\theta$ gives
     * $v_{x0}$ = 10.26
     * $v_{y0}$ = 28.19
