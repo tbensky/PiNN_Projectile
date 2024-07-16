@@ -11,7 +11,9 @@ Why PiNNs? Well, suppose you have a few data points, either from an experiment o
 
 The outcome of training on data + physics, is sufficient (at least here) to find the trajectory of a projecile subject to the drag force.
 
-# The system
+# The System
+
+## Data
 
 Here, we pull projectile data from a known system that was solved numerically using simple Euler steps with a small time constant. The initial condition of the projectile were
 
@@ -40,6 +42,20 @@ Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5
   Here is a plot of the 5 points:
 
   ![Figure 2](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory5.jpg?)
+
+
+## Physics
+
+The physics of drag is well known. We'll follow [this discussion](https://pubs.aip.org/aapt/pte/article-abstract/56/3/168/278226/When-Does-Air-Resistance-Become-Significant-in?redirectedFrom=fulltext), which organized Newton's Laws as follows:
+
+$$F=Cv^2$, so
+$$\frac{dv_x}{dt}=-\frac{C}{m}vv_x$$
+and
+$$\frac{dv_y}{dt}=-g-\frac{C}{m}vv_y.$$
+
+Here $C$ is the drag coefficient, $g$ is gravity $(=9.8 m/s^2)$, and we'll put the mass of the projectile $m=1$.
+
+
 
 
 The goal here is to use a PiNN to draw a smooth curve through each data point.
