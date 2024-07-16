@@ -23,5 +23,7 @@ Here, we pull projectile data from a known system that was solved numerically us
     * $v_{y0}$ = 28.19
 * With a drag cofficient $C=0.01$
 
-When numerically integrated, the results are found [here]()
+When numerically integrated, the results are found [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv).  The $x$ and $y$ positions are graphed here:
+
+![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg)
 
