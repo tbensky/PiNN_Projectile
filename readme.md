@@ -25,5 +25,5 @@ Here, we pull projectile data from a known system that was solved numerically us
 
 When numerically integrated, the results are found [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv).  The $x$ and $y$ positions are graphed here:
 
-![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg)
+![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg?)
 
