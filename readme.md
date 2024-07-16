@@ -25,7 +25,7 @@ Here, we pull projectile data from a known system that was solved numerically us
     * $v_{y0}$ = 28.19
 * With a drag cofficient $C=0.01$
 
-When numerically integrated, the results are found [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv).  The $x$ and $y$ positions are graphed here:
+The results of a numerical integration are [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv).  The $x$ and $y$ positions are plotted:
 
 ![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg?)
 
@@ -62,6 +62,14 @@ where $C$ is the drag coefficient, $g$ is gravity $(=9.8 m/s^2)$, and we'll put 
 
 
 The goal here is to use a PiNN to draw a smooth curve through each data point, using only the 5 data points shown and the differential equations given for $a_x$ and $a_y$ (the x and y accelerations of the projectile).
+
+# The neural network
+
+We'll try this with a neural network that resembles this one:
+
+![Figure 3](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/diagrams/diagrams.001.jpeg).
+
+In other words, the single input to the network will be $t$ or time, and from that we'd like the network to give us $x$, $y$, $v_x$ and $v_y$.
 
 
 
