@@ -48,7 +48,7 @@ Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5
 
 The physics of drag is well known. We'll follow [this discussion](https://pubs.aip.org/aapt/pte/article-abstract/56/3/168/278226/When-Does-Air-Resistance-Become-Significant-in?redirectedFrom=fulltext), which organized Newton's Laws as follows:
 
-$$F=Cv^2$, so
+$$F=Cv^2$$, so
 $$\frac{dv_x}{dt}=-\frac{C}{m}vv_x$$
 and
 $$\frac{dv_y}{dt}=-g-\frac{C}{m}vv_y.$$
