@@ -1,6 +1,6 @@
 # Projectile motion with drag using a "Physics informed neural network" (PiNN)
 
-Physics informed neural networks (or PiNNs) are a use of neural networks in the realm of solving physics problems numerically. One is demonstrated here that finds the trajectory of a projectile with the drag force.  (Note: This "simple" system is not solvable analytically, for example using the kinematic equations you may know from an introductory physics class.)
+Physics informed neural networks (or PiNNs) are a use of neural networks in the realm of solving physics problems numerically. One is demonstrated here that finds the trajectory of a projectile with the drag force.  (Note: This "simple" system is not solvable analytically| for example using the kinematic equations you may know from an introductory physics class.)
 
 Note: We know this problem is easily solved using a variety of well established techniques. We are using it here to learn about PiNNs.
 
@@ -26,4 +26,17 @@ Here, we pull projectile data from a known system that was solved numerically us
 When numerically integrated, the results are found [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv).  The $x$ and $y$ positions are graphed here:
 
 ![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg?)
+
+Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5 of the data points, which are as follows
+
+t|vx|vy|v|x|y
+0.15|9.81936043|25.49973351|27.3250114|1.505320908|4.024230274
+0.5|8.994238571|19.97982246|21.91094779|4.790417472|11.95657049
+1|8.176363485|13.35860991|15.66222776|9.068584899|20.24294006
+3.2|6.604112216|-9.243313604|11.36015601|25.11380976|23.69779604
+4.7|5.168032133|-20.42674118|21.07036572|34.0088771|0.827816308
+
+
+
+The goal here is to use a PiNN to draw a smooth curve through each data point.
 
