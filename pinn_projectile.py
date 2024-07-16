@@ -57,6 +57,7 @@ class neural_net(nn.Module):
         for x_in in [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]:
             y_out = self.forward(x_in)
 
+            #autograd.grad just sums gradients for a given layer
             #u_x = torch.autograd.grad(y_out, x_in, grad_outputs=torch.ones_like(y_out), create_graph=True, retain_graph=True)
             #print(u_x)
             #u_xx = torch.autograd.grad(u_x, x_in, grad_outputs=torch.ones_like(u_x[0]), create_graph=True, retain_graph=True)
