@@ -30,6 +30,7 @@ When numerically integrated, the results are found [here](https://github.com/tbe
 Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5 of the data points, which are as follows
 
   |     t     |     vx     |     vy     |     v     |     x     |     y     |  
+  | --------- | ---------- |  --------- | --------- | --------- | --------- |
   |    0.15  |  9.81936043  |  25.49973351  |  27.3250114  |  1.505320908  |  4.024230274  |
   |    0.5  |  8.994238571  |  19.97982246  |  21.91094779  |  4.790417472  |  11.95657049  |
   |    1  |  8.176363485  |  13.35860991  |  15.66222776  |  9.068584899  |  20.24294006  | 
