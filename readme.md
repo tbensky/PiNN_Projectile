@@ -14,9 +14,9 @@ The outcome of training on data + physics, is sufficient (at least here) to find
 Here, we pull projectile data from a known system that was solved numerically using simple Euler steps with a small time constant. The initial condition of the projectile were
 
  * $v$= 30 m/s
- * $\theta$ = 70$^\circ$
- * $g$ = 9.8 m/s$^2$
+ * $\theta$ = $70^\circ$
+ * $g$ = 9.8 m$/s^2$
  * The combination of $v$ and $\theta$ gives
-    * $v_{x0}$ = 10.2606043
-    * $v_{y0}$ = 28.19077862
+    * $v_{x0}$ = 10.26
+    * $v_{y0}$ = 28.19
 * With a drag cofficient $C=0.01$
