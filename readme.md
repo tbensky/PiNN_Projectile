@@ -19,7 +19,7 @@ Here, we pull projectile data from a known system that was solved numerically us
 
  * $v$= 30 m/s
  * $\theta$ = $70^\circ$
- * $g$ = 9.8 m/$s^2$
+ * $g$ = $9.8 m/s^2$
  * The combination of $v$ and $\theta$ gives
     * $v_{x0}$ = 10.26
     * $v_{y0}$ = 28.19
@@ -48,9 +48,12 @@ Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5
 
 The physics of drag is well known. We'll follow [this discussion](https://pubs.aip.org/aapt/pte/article-abstract/56/3/168/278226/When-Does-Air-Resistance-Become-Significant-in?redirectedFrom=fulltext), which organized Newton's Laws as follows:
 
-$$F=Cv^2$$, so
+$$F=Cv^2$$
+
 $$\frac{dv_x}{dt}=-\frac{C}{m}vv_x$$
+
 and
+
 $$\frac{dv_y}{dt}=-g-\frac{C}{m}vv_y.$$
 
 Here $C$ is the drag coefficient, $g$ is gravity $(=9.8 m/s^2)$, and we'll put the mass of the projectile $m=1$.
