@@ -16,6 +16,6 @@ plt.plot(df['x'],df['y'],'.')
 plt.xlabel("x (m)")
 plt.ylabel("y (m)")
 plt.title("Projectile trajectory with drag")
-plt.savefig("trajectory.jpg",dpi=300)
+plt.savefig("trajectory_points.jpg",dpi=300)
 plt.show()
 
