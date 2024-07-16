@@ -1,0 +1,1 @@
+# Projectile motion with drag using a "Physics informed neural network" (PiNN)
