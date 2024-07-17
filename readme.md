@@ -50,11 +50,11 @@ The physics of drag is well known. We'll follow [this discussion](https://pubs.a
 
 $$F=Cv^2,$$
 
-$$\frac{a_x}{dt}=-\frac{C}{m}vv_x,$$
+$$a_x=-\frac{C}{m}vv_x,$$
 
 and
 
-$$\frac{a_y}{dt}=-g-\frac{C}{m}vv_y,$$
+$$a_y=-g-\frac{C}{m}vv_y,$$
 
 where $C$ is the drag coefficient, $g$ is gravity $(=9.8 m/s^2)$, and we'll put the mass of the projectile $m=1$.
 
