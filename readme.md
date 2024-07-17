@@ -133,7 +133,7 @@ def L(self,data,outputs,targets):
             #u_xx = torch.autograd.grad(u_x, x_in, grad_outputs=torch.ones_like(u_x[0]), create_graph=True, retain_graph=True)
             
             
-            u_x = self.compute_ux(x_in) #torch.autograd.functional.jacobian(self, x_in, create_graph=True) 
+            u_x = self.compute_ux(x_in)
             u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=True)
         
             #compute the instantaenous speed
