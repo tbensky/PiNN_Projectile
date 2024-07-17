@@ -175,7 +175,7 @@ u_x = self.compute_ux(x_in)
 u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=True)
 ```
 
-seems to give us the first derivatives of the network output (`u_x`) and second derivative (`u_xx`).
+seems to give us the first derivatives of the network output (`u_x`) and second derivative (`u_xx`).  The power of Autodifferentiation working for us here is pretty neat.
 
 Next, we compute the instantaneous speed of the projectile
 
@@ -205,7 +205,7 @@ We were hoping to allow the network to determine $C$. We tried a couple of appro
  1. Why can't we insist on a bit of additional constraint on a weight?
  1. Why won't a wholly trainable parameter of the network work?
 
-Next, we computed the components of drag for both the $x$ and $y$ components to be
+Nevertheless, we continue and compute the components of drag for both the $x$ and $y$ components to be
 
 ```python
 dx = C * v * vx
@@ -230,11 +230,11 @@ return data_loss + phys_loss
 
 The $(x,y)$ output of the network was tracked as a function of training epoch.  In the plots that follow, the big dots are the training data, the `+` symbols are the numerical integration results, and the solid curve is that from the neural network.  
 
-Initially, the solid curve looks like this
+Initially, it all looks like this
 
 ![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_000.png?)
 
-Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and the network's predicted trajectory starts to take shape:
+Note the small blue clump in the lower left corner (by the first `+` symbol). This is the sum total of the network's response.  As the epochs pass, the loss gets lower and the network's predicted trajectory starts to take shape:
 
 ![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_001.png?)
 

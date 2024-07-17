@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import math
 import pandas as pd
 import random
+import time
 import os
 
 
@@ -55,8 +56,12 @@ class neural_net(nn.Module):
         #https://stackoverflow.com/questions/64988010/getting-the-outputs-grad-with-respect-to-the-input
         #https://discuss.pytorch.org/t/first-and-second-derivates-of-the-output-with-respect-to-the-input-inside-a-loss-function/99757
         #torch.tensor([t_raw],requires_grad = True)
-        needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]
+        #needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]
+        xl = [x/10.0 for x in range(0,45,1)]
+        needed_domain = [torch.tensor([x],requires_grad=True) for x in xl]
+
         for x_in in needed_domain:
+            x_in = x_in.to(device)
             y_out = self.forward(x_in)
 
             #autograd.grad just sums gradients for a given layer
@@ -81,7 +86,14 @@ class neural_net(nn.Module):
             phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
       
         phys_loss = torch.sqrt(phys_loss)
-        return data_loss + 1.1*phys_loss
+        return data_loss + phys_loss
+
+def find_speed():
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    if device == torch.device("cpu") and torch.backends.mps.is_available():
+        device = torch.device("mps")
+    #device =  torch.device("cpu")
+    return device
 
 def dump_results(fcount,loss):
     ts = [x/10. for x in range(0,200,1)]
@@ -92,6 +104,7 @@ def dump_results(fcount,loss):
         f.write("x,y\n")
         for t_raw in ts:
             t = torch.tensor([t_raw],requires_grad = True)
+            t = t.to(device)
             y = ann.forward(t)
             f.write(f"{y[0].item()},{y[1].item()}\n")
 
@@ -117,10 +130,14 @@ def dump_results(fcount,loss):
     #plt.pause(0.01)
 
 
+device = find_speed()
+print(device)
+
 #for best drag training: use 10-15 hidden_neuron_count for good training, lr=0.01
 ann = neural_net()
+ann.to(device)
 
-optimizer = optim.SGD(ann.parameters(),lr=0.01,momentum=0.1)
+optimizer = optim.SGD(ann.parameters(),lr=0.005,momentum=0.5)
 #loss_fn = nn.MSELoss()
 
 #projecile data with drag
@@ -151,9 +168,11 @@ epoch = 0
 loss_fn = ann.L
 frame_count = 0
 os.system("rm Evolve/*.png")
+es = time.time()
 while True:
     loss_total = 0.0
     for (data,target) in train_loader:
+        data, target = data.to(device), target.to(device)
         out = ann(data)
         loss = loss_fn(data,out,target)
         loss.backward()
@@ -161,9 +180,11 @@ while True:
         optimizer.zero_grad()
         loss_total += loss.item()
 
-    if epoch % 1000 == 0:
-        print(f"epoch={epoch},loss={loss_total}")
-        dump_results(frame_count,loss_total)
+    if epoch % 100 == 0:
+        ee = time.time()
+        print(f"epoch={epoch},loss={loss_total}, {ee-es:.1f} sec")
+        es = ee
+        #dump_results(frame_count,loss_total)
         frame_count += 1
         
     epoch += 1
