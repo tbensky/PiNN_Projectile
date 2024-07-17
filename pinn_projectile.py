@@ -57,7 +57,7 @@ class neural_net(nn.Module):
         #https://discuss.pytorch.org/t/first-and-second-derivates-of-the-output-with-respect-to-the-input-inside-a-loss-function/99757
         #torch.tensor([t_raw],requires_grad = True)
         #needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]
-        xl = [x/10.0 for x in range(0,45,1)]
+        xl = [x/10.0 for x in range(15,41,1)]
         needed_domain = [torch.tensor([x],requires_grad=True) for x in xl]
 
         for x_in in needed_domain:
@@ -92,7 +92,7 @@ def find_speed():
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     if device == torch.device("cpu") and torch.backends.mps.is_available():
         device = torch.device("mps")
-    #device =  torch.device("cpu")
+    device =  torch.device("cpu")
     return device
 
 def dump_results(fcount,loss):
@@ -101,12 +101,12 @@ def dump_results(fcount,loss):
     y_nn = []
 
     with open("results.csv","w") as f:
-        f.write("x,y\n")
+        f.write("x,y,vx,vy\n")
         for t_raw in ts:
             t = torch.tensor([t_raw],requires_grad = True)
             t = t.to(device)
             y = ann.forward(t)
-            f.write(f"{y[0].item()},{y[1].item()}\n")
+            f.write(f"{y[0].item()},{y[1].item()},{y[2].item()},{y[3].item()}\n")
 
     x_data = []
     y_data = []
@@ -137,7 +137,7 @@ print(device)
 ann = neural_net()
 ann.to(device)
 
-optimizer = optim.SGD(ann.parameters(),lr=0.005,momentum=0.5)
+optimizer = optim.SGD(ann.parameters(),lr=0.001,momentum=0.1)
 #loss_fn = nn.MSELoss()
 
 #projecile data with drag
@@ -168,6 +168,10 @@ epoch = 0
 loss_fn = ann.L
 frame_count = 0
 os.system("rm Evolve/*.png")
+os.system("rm loss.csv")
+with open("loss.csv","w") as f:
+    f.write("epoch,loss\n")
+
 es = time.time()
 while True:
     loss_total = 0.0
@@ -181,10 +185,13 @@ while True:
         loss_total += loss.item()
 
     if epoch % 100 == 0:
+        with open("loss.csv","a") as f:
+            f.write(f"{epoch},{loss.item()}\n")
+
         ee = time.time()
         print(f"epoch={epoch},loss={loss_total}, {ee-es:.1f} sec")
         es = ee
-        #dump_results(frame_count,loss_total)
+        dump_results(frame_count,loss_total)
         frame_count += 1
         
     epoch += 1

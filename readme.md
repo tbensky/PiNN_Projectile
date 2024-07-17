@@ -193,14 +193,14 @@ C =  0.01 #self.get_weight() #self.getC()
 
 We were hoping to allow the network to determine $C$. We tried a couple of approaches:
 
- 1. Using an arbitrary weight of the network, `get_weight()`. This function looked like:
+ 1. Using some weight in the network to double as $C$. Here, we defined `get_weight()` to pull a weight from the network.  This function looked like:
  ```python
      def get_weight(self):
         return self.layer2.weight[3][3].item()
 ```
  2. Using `getC()`, which is gets an additional trainable parameter we added to the network. We added this is the `___init()___` of the network class: `self.C = nn.Parameter(torch.rand(1), requires_grad=True)`.
 
- Neither of these techniques worked, so we just set $C$ to $0.01$, which was what was used to generate the numerical data. We are not sure why neither of these techniques work (i.e. have $C$ as a trainable parameter), in particular:
+ Neither of these techniques worked, so we just set $C$ to $0.01$. We never saw a smooth curve approach the numerically integrated version.  We are not sure why neither of these techniques work, in particular:
 
  1. Why can't we insist on a bit of additional constraint on a weight?
  1. Why won't a wholly trainable parameter of the network work?
