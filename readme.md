@@ -25,7 +25,7 @@ Here, we pull projectile data from a known system that was solved numerically us
     * $v_{y0}$ = 28.19
 * With a drag cofficient $C=0.01$
 
-The results of a numerical integration are [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv).  The $x$ and $y$ positions are plotted:
+The results of a numerical integration are [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv), for which we plotted he $x$ and $y$ positions:
 
 ![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg?)
 
@@ -69,7 +69,38 @@ We'll try this with a neural network that resembles this one:
 
 ![Figure 3](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/diagrams/diagrams.001.jpeg).
 
-In other words, the single input to the network will be $t$ or time, and from that we'd like the network to give us $x$, $y$, $v_x$ and $v_y$.
+Although the number of deep (or hidden layers) is left as an open variable (we actually used 2).
 
+In other words, the single input to the network will be $t$ or time. This will feed one hidden layer, which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  When a time value is input, we'd like the network to output the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
+
+## Pytorch
+
+To begin, we'll set up the basic network
+
+```python
+class neural_net(nn.Module):
+    def __init__(self):
+        super(neural_net,self).__init__()
+        self.input_neuron_count = 1
+        self.hidden_neuron_count = 10
+        self.output_neuron_count = 4
+
+        #tanh works best for this
+        self.activation = torch.nn.Tanh() 
+        
+        #2 layers seems to work
+        self.layer1 = torch.nn.Linear(self.input_neuron_count, self.hidden_neuron_count)
+        self.layer2 = torch.nn.Linear(self.hidden_neuron_count, self.output_neuron_count)
+
+        #self.C = nn.Parameter(torch.rand(1), requires_grad=True)
+        #self.C.clamp(0.01,1)
+
+
+    def forward(self,x):
+        x = self.layer1(x)
+        x = self.activation(x)
+        x = self.layer2(x)
+        return x
+```
 
 

@@ -9,16 +9,26 @@ import math
 import pandas as pd
 import random
 
+def find_speed():
+    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    if device == torch.device("cpu") and torch.backends.mps.is_available():
+        device = torch.device("mps")
+    return device
+
+
 class neural_net(nn.Module):
-    def __init__(self,input_neuron_count=1,hidden_neuron_count=10,output_neuron_count=1,learning_rate=0.1,bias_rate=0.1,init_neuron_bias=0.01):
+    def __init__(self):
         super(neural_net,self).__init__()
+        self.input_neuron_count = 1
+        self.hidden_neuron_count = 10
+        self.output_neuron_count = 4
 
         #tanh works best for this
         self.activation = torch.nn.Tanh() 
         
         #6 layers seems about right
-        self.layer1 = torch.nn.Linear(input_neuron_count, hidden_neuron_count)
-        self.layer2 = torch.nn.Linear(hidden_neuron_count, output_neuron_count)
+        self.layer1 = torch.nn.Linear(self.input_neuron_count, self.hidden_neuron_count)
+        self.layer2 = torch.nn.Linear(self.hidden_neuron_count, self.output_neuron_count)
 
         self.C = nn.Parameter(torch.rand(1), requires_grad=True)
         #self.C.clamp(0.01,1)
@@ -54,7 +64,8 @@ class neural_net(nn.Module):
         #https://stackoverflow.com/questions/64988010/getting-the-outputs-grad-with-respect-to-the-input
         #https://discuss.pytorch.org/t/first-and-second-derivates-of-the-output-with-respect-to-the-input-inside-a-loss-function/99757
         #torch.tensor([t_raw],requires_grad = True)
-        for x_in in [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]:
+        needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]
+        for x_in in needed_domain:
             y_out = self.forward(x_in)
 
             #autograd.grad just sums gradients for a given layer
@@ -115,8 +126,11 @@ def dump_results(fcount,loss):
 
 
 
+device = find_speed()
+
 #for best drag training: use 10-15 hidden_neuron_count for good training, lr=0.01
-ann = neural_net(input_neuron_count=1,hidden_neuron_count=50,output_neuron_count=4)
+ann = neural_net()
+
 optimizer = optim.SGD(ann.parameters(),lr=0.001)
 #loss_fn = nn.MSELoss()
 
@@ -124,13 +138,14 @@ optimizer = optim.SGD(ann.parameters(),lr=0.001)
 #t,x,y,vx,vy data
 pairs = [
     [[0.15],[1.505320908,4.024230274,9.81936043,25.49973351]],
-    #[[0.3],[2.948769254,7.661012594,9.43427925,23.01909416]],
     [[0.5],[4.790417472,11.95657049,8.994238571,19.97982246]],
     [[1.0],[9.068584899,20.24294006,8.176363485,13.35860991]],
     [[3.2],[25.11380976,23.69779604,6.604112216,-9.243313604]],
-    [[4.7],[5.168032133,-20.42674118,21.07036572,34.0088771,0.827816308]]
+    [[4.7],[34.0088771,0.827816308,5.168032133,-20.42674118,]]
 ]
+
    
+
 
 
 #https://stackoverflow.com/questions/41924453/pytorch-how-to-use-dataloaders-for-custom-datasets
