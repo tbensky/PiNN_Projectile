@@ -238,10 +238,18 @@ Initially, the solid curve looks like this
 
 ![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_000.png?)
 
-Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and we'll get this:
+Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and we'll get these:
 
 ![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_001.png?)
 
-A few 1000 epochs later, we see this appear
+![Figure 5](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_002.png?)
 
-![Figure 5](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_006.png?)
+![Figure 6](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_003.png?)
+
+![Figure 7](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_004.png?)
+
+![Figure 8](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_005.png?)
+
+A few 1000s of epochs later, we see this appear
+
+![Figure 9](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_006.png?)
