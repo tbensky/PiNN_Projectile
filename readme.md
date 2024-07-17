@@ -1,12 +1,10 @@
 # Projectile motion with drag using a "Physics informed neural network" (PiNN)
 
-Physics informed neural networks (or PiNNs) are a use of neural networks in the realm of solving physics problems numerically. One is demonstrated here that finds the trajectory of a projectile with the drag force.  (Note: This "simple" system is not solvable analytically| for example using the kinematic equations you may know from an introductory physics class.)
+Physics informed neural networks (or PiNNs) are a use of neural networks in the realm of solving physics problems numerically. Here, we demonstrate this idea by using a neural network to find the trajectory of a projectile subjected to the drag force $Cv^2$.  (Notes: 1) This "simple" system is not solvable analytically, for example using the kinematic equations you may know from an introductory physics class, and 2) we know this problem is easily solved using a variety of well established techniques, but we still present it here as a learning exercise.)
 
-Note: We know this problem is easily solved using a variety of well established techniques. We are using it here to learn about PiNNs.
+Why PiNNs? Well, suppose in some study you're doing, you have *some* data, either from an experiment or some theory, but not enough data to train a neural network. Why? The data may be hard, expensive, or time-consuming to acquire. Or perhaps you have reached some other limitation in acquiring or generating the data.  PiNNS do the following:
 
-Why PiNNs? Well, suppose you have a few data points, either from an experiment or some theory, but not enough data to train a neural network. Why? The data may be hard, expensive, or time-consuming to acquire. Or perhaps you have reached some other limitation in generating the data.  PiNNS do the following:
-
- 1. Train a neural network on the data you have, and
+ 1. Train a neural network on the data you do have, and
  1. Use a differential equation ("the physics") to train the network on other areas of your domain for which you do not have data.
 
 The outcome of training on data + physics, is sufficient (at least here) to find the trajectory of a projecile subject to the drag force.
