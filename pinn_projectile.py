@@ -19,12 +19,13 @@ class neural_net(nn.Module):
         self.output_neuron_count = 4
         self.C = 0.01
 
-        #tanh works best for this
-        self.activation = torch.nn.Tanh() 
+        #Both tanh and sigmoid should be tried as an activation
+        self.activation = torch.nn.Sigmoid() 
         
-        #2 layers seems to work
+        #3 layers seem to work OK
         self.layer1 = torch.nn.Linear(self.input_neuron_count, self.hidden_neuron_count)
-        self.layer2 = torch.nn.Linear(self.hidden_neuron_count, self.output_neuron_count)
+        self.layer2 = torch.nn.Linear(self.hidden_neuron_count, self.hidden_neuron_count)
+        self.layer3 = torch.nn.Linear(self.hidden_neuron_count, self.output_neuron_count)
 
         #self.C = nn.Parameter(torch.rand(1), requires_grad=True)
         #self.C.clamp(0.01,1)
@@ -34,6 +35,8 @@ class neural_net(nn.Module):
         x = self.layer1(x)
         x = self.activation(x)
         x = self.layer2(x)
+        x = self.activation(x)
+        x = self.layer3(x)
         return x
 
     def getC(self):
@@ -81,7 +84,7 @@ class neural_net(nn.Module):
             phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
       
         phys_loss = torch.sqrt(phys_loss)
-        return data_loss + phys_loss
+        return data_loss + 1.1*phys_loss
 
 def dump_results(fcount,loss):
     ts = [x/10. for x in range(0,200,1)]
@@ -120,7 +123,7 @@ def dump_results(fcount,loss):
 #for best drag training: use 10-15 hidden_neuron_count for good training, lr=0.01
 ann = neural_net()
 
-optimizer = optim.SGD(ann.parameters(),lr=0.005)
+optimizer = optim.SGD(ann.parameters(),lr=0.005,momentum=0.1)
 #loss_fn = nn.MSELoss()
 
 #projecile data with drag

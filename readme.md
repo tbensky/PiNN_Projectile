@@ -87,7 +87,7 @@ class neural_net(nn.Module):
         self.hidden_neuron_count = 10
         self.output_neuron_count = 4
 
-        #tanh works best for this
+        #tanh and sigmoid should be tried with this
         self.activation = torch.nn.Tanh() 
         
         #2 layers seems to work
@@ -240,15 +240,15 @@ Initially, the solid curve looks like this
 
 Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and we'll get these:
 
-![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_001.png?)
+![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_001.png?)
 
-![Figure 5](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_002.png?)
+![Figure 5](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_002.png?)
 
-![Figure 6](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_003.png?)
+![Figure 6](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_003.png?)
 
-![Figure 7](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_004.png?)
+![Figure 7](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_004.png?)
 
-![Figure 8](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_005.png?)
+![Figure 8](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_005.png?)
 
 A few 1000s of epochs later, we see this appear
 
