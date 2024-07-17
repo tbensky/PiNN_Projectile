@@ -228,3 +228,20 @@ then the total loss, which is returned by the loss function
 ```python
 return data_loss + phys_loss
 ```
+
+
+### Results
+
+The $(x,y)$ output of the network was tracked as a function of training epoch.  In the plots shown, the big dots are the training data, the `+` symbols are the numerical integration results, and the solid curve is that from the neural network.  
+
+Initially, the solid curve looks like this
+
+![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_000.png?)
+
+Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and we'll get this:
+
+![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_001.png?)
+
+A few 1000 epochs later, we see this appear
+
+![Figure 5](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_006.png?)
