@@ -75,7 +75,9 @@ In other words, the single input to the network will be $t$ or time. This will f
 
 ## Pytorch
 
-To begin, we'll set up the basic network
+
+### Basic network structure
+To begin, we'll set up the basic network in PyTorch
 
 ```python
 class neural_net(nn.Module):
@@ -103,4 +105,58 @@ class neural_net(nn.Module):
         return x
 ```
 
+### The loss function
+Next, we'll add the loss function. This is interesting with PiNNs, becase they combine both data loss and physics loss. Here's the loss function we used (we left a bunch of comments in, to reflect things we learned and tried):
 
+```python
+def L(self,data,outputs,targets):
+        data_loss = torch.mean((outputs-targets)**2)
+        #data_loss = torch.sqrt(torch.sum((outputs-targets)**2))
+
+        phys_loss = 0.0
+        g = 9.8
+
+        #https://stackoverflow.com/questions/64988010/getting-the-outputs-grad-with-respect-to-the-input
+        #https://discuss.pytorch.org/t/first-and-second-derivates-of-the-output-with-respect-to-the-input-inside-a-loss-function/99757
+        #torch.tensor([t_raw],requires_grad = True)
+        needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]
+        for x_in in needed_domain:
+            y_out = self.forward(x_in)
+
+            #autograd.grad just sums gradients for a given layer
+            #these didn't help us here
+            #u_x = torch.autograd.grad(y_out, x_in, grad_outputs=torch.ones_like(y_out), create_graph=True, retain_graph=True)
+            #u_xx = torch.autograd.grad(u_x, x_in, grad_outputs=torch.ones_like(u_x[0]), create_graph=True, retain_graph=True)
+            
+            
+            u_x = self.compute_ux(x_in) #torch.autograd.functional.jacobian(self, x_in, create_graph=True) 
+            u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=True)
+        
+            #compute the instantaenous speed
+            vx = y_out[2]
+            vy = y_out[3]
+            v = torch.sqrt(vx*vx+vy*vy)
+         
+            #set the drag coefficient
+            C =  0.01 #self.get_weight() #self.getC() # 0.01 #self.get_weight()
+
+            dx = C * v * vx
+            dy = C * v * vy
+            phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
+      
+        phys_loss = torch.sqrt(phys_loss)
+        return data_loss + phys_loss
+```
+
+The first 3 lines of code are pretty standard: 1) compute the data loss, 2) initialize g (=9.8), and 3) initialize the physics loss variable.
+
+Next, we build the `needed_domain` list, which reflects the domain for the training that our data doesn't support.  We take each domain point, and run it through the network on a forward pass.
+
+We began computing the first and second derivatives using
+
+```python
+u_x = torch.autograd.grad(y_out, x_in, grad_outputs=torch.ones_like(y_out), create_graph=True, retain_graph=True)
+u_xx = torch.autograd.grad(u_x, x_in, grad_outputs=torch.ones_like(u_x[0]), create_graph=True, retain_graph=True)
+```
+
+The Torch documentation seems to say that `.grad` will return a derivative vector of the same size as the `grad_outputs` vector.  We used `torch.ones_like(y_out)` to make a ones vector which is the same size as the network output (4x1), but `.grad` always returned just one number, which is the *sum* of the derivatives.
