@@ -13,7 +13,7 @@ The outcome of training on data + physics, is sufficient (at least here) to find
 
 ## Data
 
-Here, we pull projectile data from a known system that was solved numerically using simple Euler steps with a small time constant. The initial condition of the projectile were
+Here, we pull projectile data from a known system that was solved numerically using Euler steps with a small time step. The initial condition of the projectile were:
 
  * $v$= 30 m/s
  * $\theta$ = $70^\circ$
@@ -21,7 +21,7 @@ Here, we pull projectile data from a known system that was solved numerically us
  * The combination of $v$ and $\theta$ gives
     * $v_{x0}$ = 10.26
     * $v_{y0}$ = 28.19
-* With a drag cofficient $C=0.01$
+* A drag cofficient $C=0.01$
 
 The results of a numerical integration are [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv), for which we plotted he $x$ and $y$ positions:
 
@@ -37,7 +37,7 @@ Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5
   |    3.2  |  6.604112216  |  -9.243313604  |  11.36015601  |  25.11380976  |  23.69779604  |
   |    4.7  |  5.168032133  |  -20.42674118  |  21.07036572  |  34.0088771  |  0.827816308  |
 
-  Here is a plot of the 5 points:
+  Here is a plot of the $(x,y)$ points for each point:
 
   ![Figure 2](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory5.jpg?)
 
@@ -69,7 +69,7 @@ We'll try this with a neural network that resembles this one:
 
 Although the number of deep (or hidden layers) is left as an open variable (we actually used 2).
 
-In other words, the single input to the network will be $t$ or time. This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  When a time value is input, we'd like the network to output the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
+In other words, the single input to the network will be $t$ or time. This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  In other words, when a time value is input, we'd like the network to output the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
 
 ## Pytorch
 
@@ -104,9 +104,7 @@ class neural_net(nn.Module):
 ```
 
 ### The loss function
-Next, we'll add the loss function. This is interesting with PiNNs, becase they combine both data loss and physics loss. 
-
-So you'll have to write your own, custom loss function, but as long as it's a function within the `neural_network` class, the autodifferentiation seems to hold up. 
+Next, we'll add the loss function. This is difference with PiNNs, becase they combine both data loss and physics loss, so you'll have to a custom loss function. We found with PyTorch, as long as it's a function within the `neural_network` class, the autodifferentiation seems to hold up. 
 
 Here's the loss function we used (we left a bunch of comments in, to reflect things we learned and tried):
 
@@ -152,7 +150,7 @@ def L(self,data,outputs,targets):
 
 The first 3 lines of code are pretty standard: 1) compute the data loss, 2) initialize g (=9.8), and 3) initialize the physics loss variable.
 
-Next, we build the `needed_domain` list, which reflects the domain for the training that our data doesn't support.  We take each domain point as an input to the network (in other words run each through the network on a forward pass). We'll then look at derivatives of the outputs produced.
+Next, we build the `needed_domain` list, which reflects the domain for the training that our data doesn't support.  We'll take each domain point as an input to the network (in other words run each through the network on a forward pass), and then look at derivatives of the outputs produced.
 
 We began computing the first and second derivatives using
 
