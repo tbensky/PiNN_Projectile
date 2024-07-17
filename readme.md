@@ -23,7 +23,7 @@ Here, we pull projectile data from a known system that was solved numerically us
     * $v_{y0}$ = 28.19
 * A drag cofficient $C=0.01$
 
-The results of a numerical integration are [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv), for which we plotted he $x$ and $y$ positions:
+The results of a numerical integration are [here](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.csv), for which we plotted the $x$ and $y$ positions:
 
 ![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg?)
 
@@ -65,11 +65,11 @@ The goal here is to use a PiNN to draw a smooth curve through each data point, u
 
 We'll try this with a neural network that resembles this one:
 
-![Figure 3](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/diagrams/diagrams.001.jpeg).
+![Figure 3](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/diagrams/diagrams.001.jpeg)
 
 Although the number of deep (or hidden layers) is left as an open variable (we actually used 2).
 
-In other words, the single input to the network will be $t$ or time. This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  In other words, when a time value is input, we'd like the network to output the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
+So, the single input to the network will be $t$ or time. This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  In other words, when a time value is input, we'd like the network to produce the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
 
 ## Pytorch
 
@@ -168,7 +168,7 @@ This, we had to define a function called `compute_ux` which is
         return torch.autograd.functional.jacobian(self, x_in, create_graph=True)
 ```
 
-that computes the *Jacobian* of the network, which is strictly a vector of all possible derivatives of the network output.  This worked, and indeed produced a $4x1$ vector of first derivatives.  To get the 2nd derivatives, we took the Jacobian of the first derivative. Thus, the pair of lines:
+that computes the *Jacobian* of the network, which is strictly a vector of all possible derivatives of the network output.  This worked, and indeed produced a 4x1 vector of first derivatives.  To get the 2nd derivatives, we took the Jacobian of the first derivative. Thus, the pair of lines:
 
 ```python
 u_x = self.compute_ux(x_in) 
@@ -200,7 +200,7 @@ We were hoping to allow the network to determine $C$. We tried a couple of appro
 ```
  2. Using `getC()`, which is gets an additional trainable parameter we added to the network. We added this is the `___init()___` of the network class: `self.C = nn.Parameter(torch.rand(1), requires_grad=True)`.
 
- Neither of these techniques worked, so we just set $C$ to $0.01$, which was what was used to generate the numerical data. We are not sure why neither of these techniques work:
+ Neither of these techniques worked, so we just set $C$ to $0.01$, which was what was used to generate the numerical data. We are not sure why neither of these techniques work (i.e. have $C$ as a trainable parameter), in particular:
 
  1. Why can't we insist on a bit of additional constraint on a weight?
  1. Why won't a wholly trainable parameter of the network work?
@@ -212,7 +212,7 @@ dx = C * v * vx
 dy = C * v * vy
 ```
 
-and the loss just do to the physics
+and the loss just do to the physics (we used a "Euclidean" type loss):
             
 ```python
 phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
@@ -228,13 +228,13 @@ return data_loss + phys_loss
 
 ### Results
 
-The $(x,y)$ output of the network was tracked as a function of training epoch.  In the plots shown, the big dots are the training data, the `+` symbols are the numerical integration results, and the solid curve is that from the neural network.  
+The $(x,y)$ output of the network was tracked as a function of training epoch.  In the plots that follow, the big dots are the training data, the `+` symbols are the numerical integration results, and the solid curve is that from the neural network.  
 
 Initially, the solid curve looks like this
 
 ![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_000.png?)
 
-Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and we'll get these:
+Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and the network's predicted trajectory starts to take shape:
 
 ![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_001.png?)
 
