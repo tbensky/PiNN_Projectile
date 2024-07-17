@@ -106,7 +106,11 @@ class neural_net(nn.Module):
 ```
 
 ### The loss function
-Next, we'll add the loss function. This is interesting with PiNNs, becase they combine both data loss and physics loss. Here's the loss function we used (we left a bunch of comments in, to reflect things we learned and tried):
+Next, we'll add the loss function. This is interesting with PiNNs, becase they combine both data loss and physics loss. 
+
+So you'll have to write your own, custom loss function, but as long as it's a function within the `neural_network` class, the autodifferentiation seems to hold up. 
+
+Here's the loss function we used (we left a bunch of comments in, to reflect things we learned and tried):
 
 ```python
 def L(self,data,outputs,targets):
@@ -159,4 +163,65 @@ u_x = torch.autograd.grad(y_out, x_in, grad_outputs=torch.ones_like(y_out), crea
 u_xx = torch.autograd.grad(u_x, x_in, grad_outputs=torch.ones_like(u_x[0]), create_graph=True, retain_graph=True)
 ```
 
-The Torch documentation seems to say that `.grad` will return a derivative vector of the same size as the `grad_outputs` vector.  We used `torch.ones_like(y_out)` to make a ones vector which is the same size as the network output (4x1), but `.grad` always returned just one number, which is the *sum* of the derivatives.
+The Torch documentation seems to say that `.grad` will return a derivative vector of the same size as the `grad_outputs` vector. We were hoping to get a 4-component vector out $(v_x,v_y,a_x,a_y)$, so we used `torch.ones_like(y_out)` to make a ones vector which is the same size as the network output (4x1). But `.grad` still always returned just one number, which is the *sum* of the derivatives. So this returned $v_x+v_y+a_x+a_y$.
+
+This, we had to define a function called `compute_ux` which is
+
+```python
+ def compute_ux(self,x_in):
+        return torch.autograd.functional.jacobian(self, x_in, create_graph=True)
+```
+
+that computes the *Jacobian* of the network, which is strictly a vector of all possible derivatives of the network output.  To get the 2nd derivatives, we took a Jacobian of the first derivative. Thus, the pair of lines:
+
+```python
+u_x = self.compute_ux(x_in) 
+u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=True)
+```
+
+seems to give us the first derivatives of the network output (`u_x`) and second derivative (`u_xx`).
+
+Next, we compute the instantaneous speed of the projectile
+
+```python
+vx = y_out[2]
+vy = y_out[3]
+v = torch.sqrt(vx*vx+vy*vy)
+```
+
+Then we set the drag coefficient $C$ of
+
+```python
+C =  0.01 #self.get_weight() #self.getC()
+```
+
+We were hoping to allow the network to determine $C$. We tried a couple of approaches:
+
+ 1. Using an arbitrary weight of the network (`get_weight()`). This function looked like:
+ ```python
+     def get_weight(self):
+        return self.layer2.weight[3][3].item()
+```
+ 1. Using `getC()`, which is gets an additional trainable parameter we added to the network. We added this is the `___init()___` of the network class: `self.C = nn.Parameter(torch.rand(1), requires_grad=True)`.
+
+ Neither of these techniques worked, so we just set $C$ to $0.01$, which was what was used to generate the numerical data. (We are not sure why neither of these techniques work.)
+
+Next, we computed the components of drag for both the $x$ and $y$ components to be
+
+```python
+dx = C * v * vx
+dy = C * v * vy
+```
+
+and the loss just do to the physics
+            
+```python
+phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
+phys_loss = torch.sqrt(phys_loss)
+```
+
+then the total loss, which is returned by the loss function
+
+```python
+return data_loss + phys_loss
+```
