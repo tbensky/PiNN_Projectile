@@ -154,7 +154,7 @@ def L(self,data,outputs,targets):
 
 The first 3 lines of code are pretty standard: 1) compute the data loss, 2) initialize g (=9.8), and 3) initialize the physics loss variable.
 
-Next, we build the `needed_domain` list, which reflects the domain for the training that our data doesn't support.  We take each domain point, and run it through the network on a forward pass.
+Next, we build the `needed_domain` list, which reflects the domain for the training that our data doesn't support.  We take each domain point as an input to the network (in other words run each through the network on a forward pass). We'll then look at derivatives of the outputs produced.
 
 We began computing the first and second derivatives using
 
