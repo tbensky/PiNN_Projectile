@@ -71,7 +71,7 @@ We'll try this with a neural network that resembles this one:
 
 Although the number of deep (or hidden layers) is left as an open variable (we actually used 2).
 
-In other words, the single input to the network will be $t$ or time. This will feed one hidden layer, which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  When a time value is input, we'd like the network to output the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
+In other words, the single input to the network will be $t$ or time. This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  When a time value is input, we'd like the network to output the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
 
 ## Pytorch
 
