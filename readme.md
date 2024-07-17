@@ -236,7 +236,7 @@ The $(x,y)$ output of the network was tracked as a function of training epoch.  
 
 Initially, the solid curve looks like this
 
-![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_000.png?)
+![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_000.png?)
 
 Note the small blue clump in the lower left corner. This is the sum total of the network's response.  As the epochs pass, the loss gets lower and lower and we'll get these:
 
@@ -252,4 +252,6 @@ Note the small blue clump in the lower left corner. This is the sum total of the
 
 A few 1000s of epochs later, we see this appear
 
-![Figure 9](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/frame_006.png?)
+![Figure 9](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_011.png?)
+
+which is about the best we've seen.
