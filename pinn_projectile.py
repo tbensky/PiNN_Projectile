@@ -16,25 +16,42 @@ class neural_net(nn.Module):
     def __init__(self):
         super(neural_net,self).__init__()
         self.input_neuron_count = 1
-        self.hidden_neuron_count = 20
+        self.hidden_neuron_count = 25
         self.output_neuron_count = 4
         self.C = 0.01
         #self.C = nn.Parameter(torch.rand(1), requires_grad=True)
 
         #Both tanh and sigmoid should be tried as an activation
-        self.activation = torch.nn.Sigmoid() 
+        self.activation = torch.nn.Tanh() 
         
         #3 layers seem to work OK
-        self.layer1 = torch.nn.Linear(self.input_neuron_count, self.hidden_neuron_count)
-        self.layer2 = torch.nn.Linear(self.hidden_neuron_count, self.hidden_neuron_count)
-        self.layer3 = torch.nn.Linear(self.hidden_neuron_count, self.output_neuron_count)
+        self.layer1 = torch.nn.Linear(1,512)
+        self.layer2 = torch.nn.Linear(512, 512)
+        self.layer3 = torch.nn.Linear(512,512)
+        self.layer4 = torch.nn.Linear(512,512)
+        self.layer5 = torch.nn.Linear(512,512)
+        self.layer6 = torch.nn.Linear(512,4)
+
+
 
     def forward(self,x):
         x = self.layer1(x)
         x = self.activation(x)
+
         x = self.layer2(x)
         x = self.activation(x)
+        
         x = self.layer3(x)
+        x = self.activation(x)
+
+        x = self.layer4(x)
+        x = self.activation(x)
+
+        x = self.layer5(x)
+        x = self.activation(x)
+
+        x = self.layer6(x)
+
         return x
 
     def getC(self):
@@ -48,6 +65,7 @@ class neural_net(nn.Module):
 
     def L(self,data,outputs,targets):
         data_loss = torch.mean((outputs-targets)**2)
+        data_loss = torch.sqrt(data_loss)
         #data_loss = torch.sqrt(torch.sum((outputs-targets)**2))
 
         phys_loss = 0.0
@@ -57,7 +75,7 @@ class neural_net(nn.Module):
         #https://discuss.pytorch.org/t/first-and-second-derivates-of-the-output-with-respect-to-the-input-inside-a-loss-function/99757
         #torch.tensor([t_raw],requires_grad = True)
         #needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]
-        xl = [x/10.0 for x in range(15,41,1)]
+        xl = [x/10.0 for x in range(4,40,1)]
         needed_domain = [torch.tensor([x],requires_grad=True) for x in xl]
 
         for x_in in needed_domain:
@@ -101,12 +119,17 @@ def dump_results(fcount,loss):
     y_nn = []
 
     with open("results.csv","w") as f:
-        f.write("x,y,vx,vy\n")
+        f.write("x,y,vx,vy,E\n")
         for t_raw in ts:
             t = torch.tensor([t_raw],requires_grad = True)
             t = t.to(device)
             y = ann.forward(t)
-            f.write(f"{y[0].item()},{y[1].item()},{y[2].item()},{y[3].item()}\n")
+            vx = y[2]
+            vy = y[3]
+            h = y[1]
+            vsq = vx*vx+vy*vy
+            E = 0.5 * vsq + 9.8 * h
+            f.write(f"{y[0].item()},{y[1].item()},{y[2].item()},{y[3].item()},{E}\n")
 
     x_data = []
     y_data = []
@@ -115,17 +138,27 @@ def dump_results(fcount,loss):
         y_data.append(output[1])
 
     df = pd.read_csv("results.csv")
-    plt.plot(df['x'],df['y'])
-    plt.plot(x_data,y_data,'o')
+    plt.plot(df['x'],df['y'],color='blue')
+    plt.xlim([0,40])
+    plt.ylim([0,30])
+    plt.plot(x_data,y_data,'o',color='orange')
     plt.xlabel("x (m)")
     plt.ylabel("y (m)")
     plt.title(f"(phys+data), loss={loss:.2f}, C={ann.getC():.2f}")
 
     df = pd.read_csv("System/trajectory.csv")
-    plt.plot(df['x'],df['y'],"+")
+    plt.plot(df['x'],df['y'],"g+")
 
     plt.savefig(f"Evolve/frame_{fcount:03d}.png",dpi=300)
     plt.close()
+
+
+    df = pd.read_csv("loss.csv")
+    plt.plot(df['epoch'],df['loss'])
+    plt.xlabel("Epoch")
+    plt.ylabel("Loss")
+    plt.title("Projectile trajectory with drag - Loss vs. Epoch")
+    plt.savefig("loss.png",dpi=300)
     #plt.draw()
     #plt.pause(0.01)
 
