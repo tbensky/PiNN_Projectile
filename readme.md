@@ -266,7 +266,7 @@ which followed this loss evolution
 
 # More Progress
 
-To really test this, we wanted to push the algorithm even more and see how it do one only 3 data points + the differential equations. Thus, we reduced the data set to just these (format: `[[t],[x,y,vx,vy]]`):
+We wanted to push the algorithm even more and see how it do one only 3 data points + the differential equations. Thus, we reduced the data set to just these (format: `[[t],[x,y,vx,vy]]`):
 
 ```python
     [[0.15],[1.505320908,4.024230274,9.81936043,25.49973351]],
@@ -274,7 +274,7 @@ To really test this, we wanted to push the algorithm even more and see how it do
     [[4.7],[34.0088771,0.827816308,5.168032133,-20.42674118,]]
 ```
 
-which are plotted here (orange dots; green `+`s are the numerical integration results):
+which are plotted here (orange dots; green `+` signs are the numerical integration results):
 
 ![Figure 12](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/3points.png)
 
