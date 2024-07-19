@@ -9,10 +9,6 @@ Why PiNNs? Well, suppose in some study you're doing, you have *some* data, eithe
 
 The outcome of training on data + physics, is sufficient (at least here) to find the trajectory of a projecile subject to the drag force.
 
-# References
-
- * [An Expert's Guide to Training PiNNs](https://arxiv.org/pdf/2308.08468)
-
 # The System
 
 ## Data
@@ -254,4 +250,16 @@ A few 1000s of epochs later, we see this appear
 
 ![Figure 9](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_011.png?)
 
-which is about the best we've seen.
+which is about the best we've seen given the network structure shown.
+
+
+# Improvements
+
+After reading the paper by [Wang, et.al.](https://arxiv.org/pdf/2308.08468), we modified out network strucuture according to their recommendations: A depth of 3-6 and a width of 128 to 512.  We chose 6 layers, each with 512 neurons, a learning rate of 0.001 and a momentum of 0.1. With this, we are able to produce this
+
+![Figure 10](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/03/frame_50.png?)
+
+which followed this loss evolution
+
+![Figure 11](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/loss.png?)
+

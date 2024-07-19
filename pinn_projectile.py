@@ -64,9 +64,10 @@ class neural_net(nn.Module):
         return torch.autograd.functional.jacobian(self, x_in, create_graph=True)
 
     def L(self,data,outputs,targets):
-        data_loss = torch.mean((outputs-targets)**2)
-        data_loss = torch.sqrt(data_loss)
-        #data_loss = torch.sqrt(torch.sum((outputs-targets)**2))
+        #data_loss = torch.mean((outputs-targets)**2)
+        #data_loss = torch.sqrt(data_loss)
+        data_loss = torch.sqrt(torch.sum((outputs-targets)**2))
+        #return data_loss
 
         phys_loss = 0.0
         g = 9.8
@@ -74,9 +75,9 @@ class neural_net(nn.Module):
         #https://stackoverflow.com/questions/64988010/getting-the-outputs-grad-with-respect-to-the-input
         #https://discuss.pytorch.org/t/first-and-second-derivates-of-the-output-with-respect-to-the-input-inside-a-loss-function/99757
         #torch.tensor([t_raw],requires_grad = True)
-        #needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,6.0,8.0,10.0]]
-        xl = [x/10.0 for x in range(4,40,1)]
-        needed_domain = [torch.tensor([x],requires_grad=True) for x in xl]
+        needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,2.5,3.0,3.5,4.0,5.0,6.0]]
+        #xl = [x/10.0 for x in range(4,40,1)]
+        #needed_domain = [torch.tensor([x],requires_grad=True) for x in xl]
 
         for x_in in needed_domain:
             x_in = x_in.to(device)
@@ -114,7 +115,7 @@ def find_speed():
     return device
 
 def dump_results(fcount,loss):
-    ts = [x/10. for x in range(0,200,1)]
+    ts = [x/10. for x in range(0,60,1)]
     x_nn = []
     y_nn = []
 
@@ -179,7 +180,7 @@ pairs = [
     [[0.15],[1.505320908,4.024230274,9.81936043,25.49973351]],
     #[[0.5],[4.790417472,11.95657049,8.994238571,19.97982246]],
     [[1.0],[9.068584899,20.24294006,8.176363485,13.35860991]],
-    #[[3.2],[25.11380976,23.69779604,6.604112216,-9.243313604]],
+    [[3.2],[25.11380976,23.69779604,6.604112216,-9.243313604]],
     [[4.7],[34.0088771,0.827816308,5.168032133,-20.42674118,]]
 ]
 
