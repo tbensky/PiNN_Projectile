@@ -261,7 +261,7 @@ After reading the paper by [Wang, et.al.](https://arxiv.org/pdf/2308.08468), we 
 
 which followed this loss evolution
 
-![Figure 11](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/loss.png)
+![Figure 11](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/03/loss.png)
 
 
 # More Progress
