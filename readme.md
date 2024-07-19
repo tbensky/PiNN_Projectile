@@ -281,8 +281,34 @@ which are plotted here (orange dots; green `+`s are the numerical integration re
 
 With the code above, we could not get the network to agree with the numerical integration.  The best was alwats a lopsided fit like this
 
-
 ![Figure 13](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/3points_old_train.png)
+
+We thought maybe the two data points on the left were biasing the loss function too much. We tried many things like changing the network depth and width, and how the physics vs data losses were weighted.  Nothing seemed to work.
+
+Upon reviewing our code, we noticed that there are two ways to find the first derivative (which is the velocity), which is critially needed to compute the loss involving the second derivative, via the $vv_x$ and $vv_y$ terms.
+
+In our code, we have the line
+
+```python
+ u_x = self.compute_ux(x_in) #torch.autograd.functional.jacobian(self, x_in, create_graph=True) 
+```
+which computes the first derivative of the network's ouput with respect to the input (time).  Since output neurons 0 and 1 are mapped to x and y, we thought "why not use `u_x[0]` for $v_x$ and `u_x[1]` for $v_y$?  Thus changing our code to find $v_x$ and $v_y$ from
+
+```python
+vx = y_out[2]
+vy = y_out[3]
+```
+to
+```python
+vx = u_x[0]
+vy = u_x[1]
+```
+
+In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself, and not our network-declared $v_x$ and $v_y$
+
+really seemed to help.
+
+
 
 
 

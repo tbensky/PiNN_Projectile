@@ -93,12 +93,13 @@ class neural_net(nn.Module):
             u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=True)
         
             #compute the instantaenous speed
-            vx = y_out[2]
-            vy = y_out[3]
+            #vx = y_out[2]
+            #vy = y_out[3]
 
             #take velocity from the first derivative of position outputs
-            #vx = u_x[0]
-            #vy = u_x[1]
+            #seems to work better
+            vx = u_x[0]
+            vy = u_x[1]
 
             v = torch.sqrt(vx*vx+vy*vy)
          
@@ -227,7 +228,7 @@ while True:
         loss_total += loss.item()
     #scheduler.step()
 
-    if epoch % 100 == 0:
+    if epoch % 10 == 0:
         with open("loss.csv","a") as f:
             f.write(f"{epoch},{loss.item()}\n")
 
