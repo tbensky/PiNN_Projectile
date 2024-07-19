@@ -95,6 +95,11 @@ class neural_net(nn.Module):
             #compute the instantaenous speed
             vx = y_out[2]
             vy = y_out[3]
+
+            #take velocity from the first derivative of position outputs
+            #vx = u_x[0]
+            #vy = u_x[1]
+
             v = torch.sqrt(vx*vx+vy*vy)
          
             #set the drag coefficient
@@ -119,7 +124,7 @@ def dump_results(fcount,loss):
     x_nn = []
     y_nn = []
 
-    with open("results.csv","w") as f:
+    with open(f"Outputs/results_{fcount:03d}.csv","w") as f:
         f.write("x,y,vx,vy,E\n")
         for t_raw in ts:
             t = torch.tensor([t_raw],requires_grad = True)
@@ -138,8 +143,8 @@ def dump_results(fcount,loss):
         x_data.append(output[0])
         y_data.append(output[1])
 
-    df = pd.read_csv("results.csv")
-    plt.plot(df['x'],df['y'],color='blue')
+    df = pd.read_csv(f"Outputs/results_{fcount:03d}.csv")
+    plt.plot(df['x'],df['y'],'-',color='blue')
     plt.xlim([0,40])
     plt.ylim([0,30])
     plt.plot(x_data,y_data,'o',color='orange')
@@ -171,7 +176,9 @@ print(device)
 ann = neural_net()
 ann.to(device)
 
-optimizer = optim.SGD(ann.parameters(),lr=0.001,momentum=0.1)
+optimizer = optim.SGD(ann.parameters(),lr=0.0005,momentum=0.1)
+#scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda epoch: torch.exp(torch.tensor(-0.0005*epoch)))
+
 #loss_fn = nn.MSELoss()
 
 #projecile data with drag
@@ -180,7 +187,7 @@ pairs = [
     [[0.15],[1.505320908,4.024230274,9.81936043,25.49973351]],
     #[[0.5],[4.790417472,11.95657049,8.994238571,19.97982246]],
     [[1.0],[9.068584899,20.24294006,8.176363485,13.35860991]],
-    [[3.2],[25.11380976,23.69779604,6.604112216,-9.243313604]],
+    #[[3.2],[25.11380976,23.69779604,6.604112216,-9.243313604]], #target for in/out
     [[4.7],[34.0088771,0.827816308,5.168032133,-20.42674118,]]
 ]
 
@@ -202,7 +209,8 @@ epoch = 0
 loss_fn = ann.L
 frame_count = 0
 os.system("rm Evolve/*.png")
-os.system("rm loss.csv")
+os.system("rm Outputs/*.csv")
+os.system("rm loss.*")
 with open("loss.csv","w") as f:
     f.write("epoch,loss\n")
 
@@ -217,13 +225,14 @@ while True:
         optimizer.step()
         optimizer.zero_grad()
         loss_total += loss.item()
+    #scheduler.step()
 
     if epoch % 100 == 0:
         with open("loss.csv","a") as f:
             f.write(f"{epoch},{loss.item()}\n")
 
         ee = time.time()
-        print(f"epoch={epoch},loss={loss_total}, {ee-es:.1f} sec")
+        print(f"epoch={epoch},loss={loss_total}, {ee-es:.1f} sec") #, lr={scheduler.get_last_lr()}")
         es = ee
         dump_results(frame_count,loss_total)
         frame_count += 1

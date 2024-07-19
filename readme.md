@@ -253,7 +253,7 @@ A few 1000s of epochs later, we see this appear
 which is about the best we've seen given the network structure shown.
 
 
-# Improvements
+## Improvements
 
 After reading the paper by [Wang, et.al.](https://arxiv.org/pdf/2308.08468), we modified out network strucuture according to their recommendations: A depth of 3-6 and a width of 128 to 512.  We chose 6 layers, each with 512 neurons, a learning rate of 0.001 and a momentum of 0.1. With this, we are able to produce this
 
@@ -262,4 +262,16 @@ After reading the paper by [Wang, et.al.](https://arxiv.org/pdf/2308.08468), we 
 which followed this loss evolution
 
 ![Figure 11](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/loss.png)
+
+
+# More Progress
+
+To really test this, we wanted to push the algorithm even more and see how it do one only 3 data points + the differential equations. Thus, we reduced the data set to just these (format: `[[t],[x,y,vx,vy]]`):
+
+```python
+    [[0.15],[1.505320908,4.024230274,9.81936043,25.49973351]],
+    [[1.0],[9.068584899,20.24294006,8.176363485,13.35860991]],
+    [[4.7],[34.0088771,0.827816308,5.168032133,-20.42674118,]]
+```
+
 
