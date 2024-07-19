@@ -278,12 +278,13 @@ which are plotted here (orange dots; green `+` signs are the numerical integrati
 
 ![Figure 12](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/3points.png)
 
+Our hope was that the physics loss would guide the training to send the trajectory back down after the initial rise.
 
-With the code above, we could not get the network to agree with the numerical integration.  The best was alwats a lopsided fit like this
+However, ith the code above, we could not get the network to agree with the numerical integration.  The best was always a lopsided fit like this
 
 ![Figure 13](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/3points_old_train.png)
 
-We thought maybe the two data points on the left were biasing the loss function too much. We tried many things like changing the network depth and width, and how the physics vs data losses were weighted.  Nothing seemed to work.
+We thought: Isn't the physics strong enough to drive the training? Maybe the two data points on the left were biasing the loss function too much? We tried many things like changing the network depth and width, and how the physics vs data losses were weighted.  Nothing seemed to work.
 
 Upon reviewing our code, we noticed that there are two ways to find the first derivative (which is the velocity), which is critially needed to compute the loss involving the second derivative, via the $vv_x$ and $vv_y$ terms.
 
@@ -304,9 +305,7 @@ vx = u_x[0]
 vy = u_x[1]
 ```
 
-In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself, and not our network-declared $v_x$ and $v_y$
-
-really seemed to help.
+In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself, and not our network-declared output values for $v_x$ and $v_y$. This really seemed to help.
 
 
 
