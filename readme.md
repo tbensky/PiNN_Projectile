@@ -314,11 +314,11 @@ In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the
 
 This really seemed to help. Here is a result after about 6000 epochs
 
-![Figure 14](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Julgood_results/frame_457.png)
+![Figure 14](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Jul_good_results/frame_457.png)
 
 that followed this loss profile
 
-![Figure 15](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Julgood_results/loss.png)
+![Figure 15](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Jul_good_results/loss.png)
 
 
 
