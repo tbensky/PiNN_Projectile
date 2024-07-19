@@ -266,7 +266,7 @@ which followed this loss evolution
 
 # More Progress
 
-We wanted to push the algorithm even more and see how it do one only 3 data points + the differential equations. Thus, we reduced the data set to just these (format: `[[t],[x,y,vx,vy]]`):
+We wanted to push the algorithm more and see how it would do with only 3 data points + the differential equations. Thus, we reduced the data set to just these (format: `[[t],[x,y,vx,vy]]`):
 
 ```python
     [[0.15],[1.505320908,4.024230274,9.81936043,25.49973351]],
@@ -278,22 +278,27 @@ which are plotted here (orange dots; green `+` signs are the numerical integrati
 
 ![Figure 12](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/3points.png)
 
-Our hope was that the physics loss would guide the training to send the trajectory back down after the initial rise.
+Our hope was that the physics loss would guide the training enough to send the trajectory back down after the initial rise.
 
-However, ith the code above, we could not get the network to agree with the numerical integration.  The best was always a lopsided fit like this
+With the above code however, we could not get the network to agree with the numerical integration.  The best was always a lopsided fit like this
 
 ![Figure 13](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/3points_old_train.png)
 
-We thought: Isn't the physics strong enough to drive the training? Maybe the two data points on the left were biasing the loss function too much? We tried many things like changing the network depth and width, and how the physics vs data losses were weighted.  Nothing seemed to work.
+Thoughts:
 
-Upon reviewing our code, we noticed that there are two ways to find the first derivative (which is the velocity), which is critially needed to compute the loss involving the second derivative, via the $vv_x$ and $vv_y$ terms.
+  * Isn't the physics strong enough to drive the training? 
+  * Maybe the two data points on the left were biasing the loss function too much? 
+  
+We tried many things like changing the network depth and width, and how the physics vs data losses were weighted in the total loss.  Nothing seemed to work.
+
+Upon reviewing our code, we noticed that there may be two ways to find the first derivative of the x and y positions (which are $v_x$ and $v_y$). These are of course critially in order to compute the physics loss, as shown in the equations above.
 
 In our code, we have the line
 
 ```python
  u_x = self.compute_ux(x_in) #torch.autograd.functional.jacobian(self, x_in, create_graph=True) 
 ```
-which computes the first derivative of the network's ouput with respect to the input (time).  Since output neurons 0 and 1 are mapped to x and y, we thought "why not use `u_x[0]` for $v_x$ and `u_x[1]` for $v_y$?  Thus changing our code to find $v_x$ and $v_y$ from
+which computes the first derivative of the network's ouput with respect to the input (which is time).  Since output neurons 0 and 1 are mapped to the x and y positions of the projectileee, we thought "why not use `u_x[0]` for $v_x$ and `u_x[1]` for $v_y$?  Thus changing our code to find $v_x$ and $v_y$ from
 
 ```python
 vx = y_out[2]
@@ -305,7 +310,9 @@ vx = u_x[0]
 vy = u_x[1]
 ```
 
-In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself (not our network-declared output neurons for $v_x$ and $v_y$). This really seemed to help. Here is a result after about 6000 epochs
+In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself (not our network-declared output neurons for $v_x$ and $v_y$). 
+
+This really seemed to help. Here is a result after about 6000 epochs
 
 ![Figure 14](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Jul/frame_457.png)
 
