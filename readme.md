@@ -305,7 +305,14 @@ vx = u_x[0]
 vy = u_x[1]
 ```
 
-In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself, and not our network-declared output values for $v_x$ and $v_y$. This really seemed to help.
+In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself, and not our network-declared output values for $v_x$ and $v_y$. This really seemed to help. Here is a result after about 6000 epochs
+
+![Figure 14](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Jul/frame_457.png)
+
+that followed this loss profile
+
+![Figure 15](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Jul/loss.png)
+
 
 
 
