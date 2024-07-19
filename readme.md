@@ -274,4 +274,12 @@ To really test this, we wanted to push the algorithm even more and see how it do
     [[4.7],[34.0088771,0.827816308,5.168032133,-20.42674118,]]
 ```
 
+which are plotted here
+
+![Figure 12](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/3points.png)
+
+
+
+With the code above, we could not get the network to agree with the numerical integration.
+
 
