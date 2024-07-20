@@ -303,7 +303,7 @@ Upon reviewing our code, we noticed that there may be two ways to find the first
 In our code, we have the line
 
 ```python
- u_x = self.compute_ux(x_in) #torch.autograd.functional.jacobian(self, x_in, create_graph=True) 
+ u_x = self.compute_ux(x_in)
 ```
 which computes the first derivative of the network's ouput with respect to the input (which is time).  Since output neurons 0 and 1 are mapped to the x and y positions of the projectile, we thought "why not use `u_x[0]` for $v_x$ and `u_x[1]` for $v_y$?  Thus changing our code to find $v_x$ and $v_y$ from
 
