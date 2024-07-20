@@ -75,12 +75,13 @@ class neural_net(nn.Module):
         #https://stackoverflow.com/questions/64988010/getting-the-outputs-grad-with-respect-to-the-input
         #https://discuss.pytorch.org/t/first-and-second-derivates-of-the-output-with-respect-to-the-input-inside-a-loss-function/99757
         #torch.tensor([t_raw],requires_grad = True)
-        needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,2.5,3.0,3.5,4.0,5.0,6.0]]
+        
+        #needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,2.5,3.0,3.5,4.0,5.0,6.0]]
         #xl = [x/10.0 for x in range(4,40,1)]
         #needed_domain = [torch.tensor([x],requires_grad=True) for x in xl]
 
-        for x_in in needed_domain:
-            x_in = x_in.to(device)
+        for x_in in needed_domain: #needed_domain:
+            #x_in = x_in.to(device)
             y_out = self.forward(x_in)
 
             #autograd.grad just sums gradients for a given layer
@@ -191,6 +192,11 @@ pairs = [
     #[[3.2],[25.11380976,23.69779604,6.604112216,-9.243313604]], #target for in/out
     [[4.7],[34.0088771,0.827816308,5.168032133,-20.42674118,]]
 ]
+
+#needed_domain = [torch.tensor([x],requires_grad=True) for x in [0.25,2.0,2.5,3.0,3.5,4.0,5.0,6.0]]
+
+needed_domain = torch.stack([torch.tensor([x],requires_grad=True) for x in [0.25,2.0,2.5,3.0,3.5,4.0,5.0,6.0]])
+needed_domain = needed_domain.to(device)
 
 
 #https://stackoverflow.com/questions/41924453/pytorch-how-to-use-dataloaders-for-custom-datasets
