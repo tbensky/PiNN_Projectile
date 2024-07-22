@@ -60,20 +60,22 @@ Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5
 
 The physics of drag is well known. We'll follow [this discussion](https://pubs.aip.org/aapt/pte/article-abstract/56/3/168/278226/When-Does-Air-Resistance-Become-Significant-in?redirectedFrom=fulltext), which organized Newton's Laws as follows:
 
-$$F=Cv^2,$$
+$$${\vec F}_{drag}=C{\vec v^2},$$
+
+which gives us $x$ and $y$ accelerations of
 
 $$a_x=-\frac{C}{m}vv_x,$$
 
 and
 
-$$a_y=-g-\frac{C}{m}vv_y,$$
+$$a_y=-g-\frac{C}{m}vv_y.$$
 
-where $C$ is the drag coefficient, $g$ is gravity $(=9.8 m/s^2)$, and we'll put the mass of the projectile $m=1$.
+Here, $C$ is the drag coefficient, $g$ is gravity $(=9.8 m/s^2)$, and we'll put the mass of the projectile $m=1$.
 
 ## Goal
 
 
-The goal here is to use a PiNN to draw a smooth curve through each data point, using only the 5 data points shown and the differential equations given for $a_x$ and $a_y$ (the x and y accelerations of the projectile).
+The goal here is to use a PiNN to find a smooth curve that agrees with the numerical integration result. We'll insiston training the network on only the 5 data points shown and the differential equations given for $a_x$ and $a_y$.
 
 # The neural network
 
