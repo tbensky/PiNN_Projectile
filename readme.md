@@ -177,7 +177,9 @@ u_x = torch.autograd.grad(y_out, x_in, grad_outputs=torch.ones_like(y_out), crea
 u_xx = torch.autograd.grad(u_x, x_in, grad_outputs=torch.ones_like(u_x[0]), create_graph=True, retain_graph=True)
 ```
 
-The Torch documentation seems to say that `.grad` will return a derivative vector of the same size as the vector pointed to by the `grad_outputs` parameter. We were hoping to get a 4-component vector out $(v_x,v_y,a_x,a_y)$, so we used `torch.ones_like(y_out)` to make a ones vector which is the same size as the network output (4x1). But `.grad` still always returned just one number, which is the *sum* of the derivatives. So this returned $v_x+v_y+a_x+a_y$. (We're not sure why the sum of the gradients would be useful and many PiNN tutorials only have one network output, so they're usually OK with this; not so here, with the 4 outputs we require.)
+The Torch documentation seems to say that `.grad` will return a derivative vector of the same size as the vector pointed to by the `grad_outputs` parameter. We were hoping to get a 4-component vector out $(v_x,v_y,a_x,a_y)$, so we used `torch.ones_like(y_out)` to make a ones vector which is the same size as the network output (4x1). But `.grad` still always returned just one number, which is the *sum* of the derivatives. So this returned $v_x+v_y+a_x+a_y$. 
+
+(We're not sure why the sum of the gradients would be useful. But many PiNN tutorials only have one network output, so they're usually OK with this; not so here, with the 4 outputs we require.)
 
 This, we had to define a function called `compute_ux` which is
 
