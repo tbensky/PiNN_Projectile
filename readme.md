@@ -14,7 +14,7 @@ Notes:
 
 ## Overview of PiNNs
 
-Why PiNNs? Well, suppose in some study you're doing, you have *some* data, either from an experiment or some theory, but not enough data to train a neural network. Why? The data may be hard, expensive, or time-consuming to acquire. Or perhaps you have reached some other limitation in acquiring or generating the data.  PiNNS do the following:
+Why PiNNs? Suppose in some work, you have *some* data, either from an experiment or some theory, but not enough data to train a neural network. Why? The data may be hard, expensive, or time-consuming to acquire. Or perhaps you have reached some limitation in acquiring or generating the data.  PiNNs do the following:
 
  1. Train a neural network on the data you do have, and
  1. Use a differential equation ("the physics") to train the network on other areas of your domain for which you do not have data.
