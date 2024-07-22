@@ -39,7 +39,7 @@ The results of a numerical integration are [here](https://github.com/tbensky/PiN
 
 ![Figure 1](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory.jpg?)
 
-Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5 of the data points, which are as follows
+Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5 of the data points, which are the only ones will use to train the PiNN.  Here they are
 
   |     t     |     vx     |     vy     |     v     |     x     |     y     |  
   | --------- | ---------- |  --------- | --------- | --------- | --------- |
@@ -49,18 +49,18 @@ Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5
   |    3.2  |  6.604112216  |  -9.243313604  |  11.36015601  |  25.11380976  |  23.69779604  |
   |    4.7  |  5.168032133  |  -20.42674118  |  21.07036572  |  34.0088771  |  0.827816308  |
 
-  Here is a plot of these 5 $(x,y)$ points:
+  and here is a plot of them:
 
   ![Figure 2](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory5.jpg?)
 
-  These are the only points we'll use to train the neural network.
+  Again, these are the only points we'll use to train the neural network.
 
 
 ## Physics
 
 The physics of drag is well known. We'll follow [this discussion](https://pubs.aip.org/aapt/pte/article-abstract/56/3/168/278226/When-Does-Air-Resistance-Become-Significant-in?redirectedFrom=fulltext), which organized Newton's Laws as follows:
 
-$$${\vec F}_{drag}=C{\vec v^2},$$
+$${\vec F}_{drag}=C{\vec v^2},$$
 
 which gives us $x$ and $y$ accelerations of
 
