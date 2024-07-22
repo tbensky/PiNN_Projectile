@@ -168,7 +168,7 @@ The first 3 lines of code are pretty standard: 1) compute the data loss, 2) init
 
 Next, we build the `needed_domain` list, which reflects the domain for the training that our data doesn't support.  We'll take each domain point as an input to the network (in other words run each through the network on a forward pass), and then look at derivatives of the outputs produced to compute the physics loss. 
 
-These numbers, were stacked into the data-absent regions, becauase we found during training, the network rather quickly embraces the data points, but seems to act more slowly with the physics loss.
+These numbers, were stacked into the data-absent regions, because during training, we found the network rather quickly embraces the data points, but seems to act more slowly with the physics loss.
 
 We began computing the first and second derivatives using
 
