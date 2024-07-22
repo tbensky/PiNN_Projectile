@@ -1,13 +1,18 @@
 # Projectile motion with drag using a "Physics informed neural network" (PiNN)
 
+
+## Introduction
 Physics informed neural networks (or PiNNs) are a use of neural networks in the realm of solving physics problems numerically. 
 
-Here, we demonstrate this idea by using a neural network to find the trajectory of a projectile subjected to the drag force $Cv^2$.
+Here, we demonstrate this idea by using a neural network to "learn" the trajectory of a projectile subject to the drag force ${\vec F}_{drag}C{\vec v}^2$.
 
 Notes:
  1. This "simple" system is not solvable analytically, for example using the kinematic equations from an introductory physics class, and
 
  1. We know this problem is easily solved using a variety of well established techniques, but we still present it here as a learning exercise.
+
+
+## Overview of PiNNs
 
 Why PiNNs? Well, suppose in some study you're doing, you have *some* data, either from an experiment or some theory, but not enough data to train a neural network. Why? The data may be hard, expensive, or time-consuming to acquire. Or perhaps you have reached some other limitation in acquiring or generating the data.  PiNNS do the following:
 
@@ -343,6 +348,9 @@ With a neural network trained on a projectile, we now have a model we may interr
 
 
 # References
+
+ * [Physics-Informed Neural Networks (PINNs) - An Introduction](https://www.youtube.com/watch?v=G_hIppUWcsc&t=863s)
+
  * [ETH Zürich DLSC: Physics-Informed Neural Networks - Applications](https://www.youtube.com/watch?v=IDIv92Z6Qvc)
 
-* [Wang, et.al.](https://arxiv.org/pdf/2308.08468)
+ * [Wang, et.al.](https://arxiv.org/pdf/2308.08468)
