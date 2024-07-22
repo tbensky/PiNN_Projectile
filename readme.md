@@ -158,8 +158,10 @@ def L(self,data,outputs,targets):
             #set the drag coefficient
             C =  0.01 #self.get_weight() #self.getC() # 0.01 #self.get_weight()
 
+            #find the x and y components of the drag force
             dx = C * v * vx
             dy = C * v * vy
+            #compute the physics loss
             phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
       
         phys_loss = torch.sqrt(phys_loss)
