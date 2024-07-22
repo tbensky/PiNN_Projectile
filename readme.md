@@ -87,7 +87,7 @@ Although the number of deep (or hidden layers) is left as an open variable (we u
 
 So, the single input to the network will be $t$ (time). This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  In other words, when a time value is input, we'd like the network to produce the $x$ and $y$ position of the projectile and the two components of its velocity, $v_x$ and $v_y$.
 
-## Implmentation in PyTorch
+## Implementation in PyTorch
 
 
 ### Basic network structure
