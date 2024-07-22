@@ -368,7 +368,7 @@ For those reviewing your basic physics
 
  * $v_x$ would be constant (i.e. a horiontal line) in the absence of drag
  * $x$ would be a line with a slope of $v_x$ (since $x=v_xt$ in the absence of drag)
- * $v_y$ would be a line with slope $g$ (since $v_y=gt$ in the absence of drag)
+ * $v_y$ would be a line with slope $-g$ (since $v_y=-gt$ in the absence of drag; minus means down too)
  * $y$ would look about the way it is shown above in the absence of drag, but there would be some deviations from the orange curve in the top plot.
 
 # References
