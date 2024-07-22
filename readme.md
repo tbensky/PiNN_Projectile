@@ -225,7 +225,7 @@ We were hoping to allow the network to determine $C$. We tried a couple of appro
  1. Why can't we insist on a bit of additional constraint on a weight?
  1. Why won't a wholly trainable parameter of the network work?
 
-Nevertheless, we continue and compute the components of drag for both the $x$ and $y$ components to be
+We continue by just setting $C=0.01$, computing the components of drag for both the $x$ and $y$ components as
 
 ```python
 dx = C * v * vx

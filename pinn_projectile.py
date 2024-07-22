@@ -93,7 +93,7 @@ class neural_net(nn.Module):
             
             u_x = self.compute_ux(x_in) #torch.autograd.functional.jacobian(self, x_in, create_graph=True) 
             u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=True)
-        
+
             #compute the instantaenous speed
             #vx = y_out[2]
             #vy = y_out[3]
