@@ -239,23 +239,23 @@ The $(x,y)$ output of the network was tracked as a function of training epoch.  
 
 Initially, it all looks like this
 
-![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_000.png?)
+![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/02/frame_000.png?)
 
 Note the small blue clump in the lower left corner (by the first `+` symbol). This is the sum total of the network's response.  As the epochs pass, the loss gets lower and the network's predicted trajectory starts to take shape:
 
-![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_001.png?)
+![Figure 4](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/02/frame_001.png?)
 
-![Figure 5](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_002.png?)
+![Figure 5](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/02/frame_002.png?)
 
-![Figure 6](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_003.png?)
+![Figure 6](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/02/frame_003.png?)
 
-![Figure 7](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_004.png?)
+![Figure 7](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/02/frame_004.png?)
 
-![Figure 8](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_005.png?)
+![Figure 8](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/02/frame_005.png?)
 
 A few 1000s of epochs later, we see this appear
 
-![Figure 9](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/02/frame_011.png?)
+![Figure 9](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/02/frame_011.png?)
 
 which is about the best we've seen given the network structure shown.
 
@@ -264,11 +264,11 @@ which is about the best we've seen given the network structure shown.
 
 After reading the paper by [Wang, et.al.](https://arxiv.org/pdf/2308.08468), we modified out network strucuture according to their recommendations: A depth of 3-6 and a width of 128 to 512.  We chose 6 layers, each with 512 neurons, a learning rate of 0.001 and a momentum of 0.1. With this, we are able to produce this
 
-![Figure 10](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/03/frame_050.png)
+![Figure 10](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/03/frame_050.png)
 
 which followed this loss evolution
 
-![Figure 11](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/03/loss.png)
+![Figure 11](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/03/loss.png)
 
 
 # More Progress
@@ -321,11 +321,11 @@ In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the
 
 This really seemed to help. Here is a result after about 6000 epochs
 
-![Figure 14](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Jul_good_results/frame_457.png)
+![Figure 14](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/05-19Jul_good_results/frame_457.png)
 
 that followed this loss profile
 
-![Figure 15](https://github.com/tbensky/PiNN_Projectile/blob/main/Results/05-19Jul_good_results/loss.png)
+![Figure 15](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/05-19Jul_good_results/loss.png)
 
 # Uses
 
@@ -338,4 +338,6 @@ With a neural network trained on a projectile, we now have a model we may interr
 
 
 # References
- * [](https://www.youtube.com/watch?v=IDIv92Z6Qvc)
+ * [https://www.youtube.com/watch?v=IDIv92Z6Qvc](https://www.youtube.com/watch?v=IDIv92Z6Qvc)
+
+* [Wang, et.al.](https://arxiv.org/pdf/2308.08468)
