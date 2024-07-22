@@ -329,11 +329,11 @@ that followed this loss profile
 
 # Uses
 
-With a neural network trained on a projectile, we now have a model we may interrogate in various ways. Here's a couple of plot that ramp the time value (input to the netowrk), while plotting both x and y positions, as well as the x and y components of speed, $v_x$ and $v_y$.
+With a neural network trained on a projectile, we now have a model we may interrogate in various ways. Here's a couple of plots that ramp the time value (input to the network), while plotting both x and y positions. Another plots $v_x$ and $v_y$.
 
-![Figure 12](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/xy.png)
+![Figure 16](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/xy.png)
 
-![Figure 12](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/vxvy.png)
+![Figure 17](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/vxvy.png)
 
 
 
