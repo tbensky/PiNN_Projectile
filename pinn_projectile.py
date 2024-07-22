@@ -55,7 +55,8 @@ class neural_net(nn.Module):
         return x
 
     def getC(self):
-        return self.C #self.C.item()
+        return self.C 
+        #return self.C.item()
 
     def get_weight(self):
         return self.layer2.weight[3][3].item()
@@ -102,14 +103,20 @@ class neural_net(nn.Module):
             vx = u_x[0]
             vy = u_x[1]
 
+            #u_x[2] and u_x[3] definitely do not work for
+            #the 2nd derivatives
+            ax = u_xx[0]
+            ay = u_xx[1]
+
             v = torch.sqrt(vx*vx+vy*vy)
          
             #set the drag coefficient
-            C =  self.C #self.get_weight() #self.getC() # 0.01 #self.get_weight()
+            C =  0.01 #self.C #self.get_weight() #self.getC() # 0.01 #self.get_weight()
 
             dx = C * v * vx
             dy = C * v * vy
-            phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
+            #phys_loss += (u_xx[0] + dx)**2 + (u_xx[1] + g + dy)**2
+            phys_loss += (ax + dx)**2 + (ay + g + dy)**2
       
         phys_loss = torch.sqrt(phys_loss)
         return data_loss + phys_loss
@@ -127,17 +134,12 @@ def dump_results(fcount,loss):
     y_nn = []
 
     with open(f"Outputs/results_{fcount:03d}.csv","w") as f:
-        f.write("x,y,vx,vy,E\n")
+        f.write("t,x,y,vx,vy\n")
         for t_raw in ts:
             t = torch.tensor([t_raw],requires_grad = True)
             t = t.to(device)
             y = ann.forward(t)
-            vx = y[2]
-            vy = y[3]
-            h = y[1]
-            vsq = vx*vx+vy*vy
-            E = 0.5 * vsq + 9.8 * h
-            f.write(f"{y[0].item()},{y[1].item()},{y[2].item()},{y[3].item()},{E}\n")
+            f.write(f"{t_raw},{y[0].item()},{y[1].item()},{y[2].item()},{y[3].item()}\n")
 
     x_data = []
     y_data = []
@@ -239,7 +241,7 @@ while True:
             f.write(f"{epoch},{loss.item()}\n")
 
         ee = time.time()
-        print(f"epoch={epoch},loss={loss_total}, {ee-es:.1f} sec") #, lr={scheduler.get_last_lr()}")
+        print(f"epoch={epoch},loss={loss_total}, C={ann.getC()}, {ee-es:.1f} sec") #, lr={scheduler.get_last_lr()}")
         es = ee
         dump_results(frame_count,loss_total)
         frame_count += 1
