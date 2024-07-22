@@ -364,7 +364,12 @@ Here's a couple of plots that ramp the time value (input to the network), while 
 
 ![Figure 17](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/vxvy.png)
 
+For those reviewing your basic physics
 
+ * $v_x$ would be constant (i.e. a horiontal line) in the absence of drag
+ * $x$ would be a line with a slope of $v_x$ (since $x=v_xt$ in the absence of drag)
+ * $v_y$ would be a line with slope $g$ (since $v_y=gt$ in the absence of drag)
+ * $y$ would look about the way it is shown above in the absence of drag, but there would be some deviations from the orange curve in the top plot.
 
 # References
 
