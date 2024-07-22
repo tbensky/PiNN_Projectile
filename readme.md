@@ -349,10 +349,14 @@ that followed this loss profile
 ![Figure 15](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/05-19Jul_good_results/loss.png)
 
 
-## Here is a video showing the training results as a function of epoch
+## Videos
+### Here is a video showing the training results as a function of epoch
 
 [![Img alt text](https://img.youtube.com/vi/0wlHa1-M7kw/0.jpg)](https://www.youtube.com/watch?v=0wlHa1-M7kw)
 
+### And another with sound linked to the training loss profile
+
+[![Img alt text](https://img.youtube.com/vi/jPzKnzi8mw4/0.jpg)](https://www.youtube.com/watch?v=jPzKnzi8mw4)
 
 # Uses
 
