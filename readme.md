@@ -174,6 +174,8 @@ Next, we build the `needed_domain` list, which reflects the domain for the train
 
 These numbers, were stacked into the data-absent regions, because during training, we found the network rather quickly embraces the data points, but seems to act more slowly with the physics loss.
 
+### Notes about PyTorch
+
 We began computing the first and second derivatives using
 
 ```python
@@ -200,6 +202,8 @@ u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=Tru
 ```
 
 seems to give us the first derivatives of the network output (`u_x`) and second derivative (`u_xx`).  The power of Autodifferentiation working for us here is pretty neat.
+
+## Continuing
 
 Next, we compute the instantaneous speed of the projectile
 
