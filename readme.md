@@ -120,7 +120,7 @@ class neural_net(nn.Module):
 ```
 
 ### The loss function
-Next, we'll add the loss function. This is different with PiNNs vs 100% data-trained networks, because PiNNs gave loss that is combination of both data and physics losses (not just data loss). Thus, you'll have to write a custom loss function. We found with PyTorch, as long as the loss function is a member of the `neural_network` class, the autodifferentiation seems to hold up. 
+Next, we'll add the loss function. This is different with PiNNs vs 100% data-trained networks, because PiNNs have a bet training loss that is combination of both data and physics losses (not just data loss). Thus, you'll have to write a custom loss function. We found with PyTorch, as long as the loss function is a member of the `neural_network` class, the autodifferentiation seems to hold up. 
 
 Here's the loss function we used (we left a bunch of comments in, to reflect things we learned and tried):
 
