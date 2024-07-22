@@ -181,7 +181,7 @@ The Torch documentation seems to say that `.grad` will return a derivative vecto
 
 (We're not sure why the sum of the gradients would be useful. But many PiNN tutorials only have one network output, so they're usually OK with this; not so here, with the 4 outputs we require.)
 
-This, we had to define a function called `compute_ux` which is
+Thus, we had to define a function called `compute_ux` which is
 
 ```python
  def compute_ux(self,x_in):
