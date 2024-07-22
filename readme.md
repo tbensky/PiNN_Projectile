@@ -83,9 +83,9 @@ We'll try this with a neural network that resembles this one:
 
 ![Figure 3](https://github.com/tbensky/PiNN_Projectile/blob/main/Media/diagrams/diagrams.001.jpeg)
 
-Although the number of deep (or hidden layers) is left as an open variable (we actually used 2).
+Although the number of deep (or hidden layers) is left as an open variable (we used 2 here in our initial trials).
 
-So, the single input to the network will be $t$ or time. This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  In other words, when a time value is input, we'd like the network to produce the $(x,y)$ position of the projectile and the two components of its velocity, $(v_x,v_y)$.
+So, the single input to the network will be $t$ (time). This will feed one (or more) hidden layer(s), which will feed an output layer that will give us $x$, $y$, $v_x$ and $v_y$.  In other words, when a time value is input, we'd like the network to produce the $x$ and $y$ position of the projectile and the two components of its velocity, $v_x$ and $v_y$.
 
 ## Implmentation in PyTorch
 
