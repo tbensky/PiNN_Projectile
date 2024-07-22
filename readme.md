@@ -49,9 +49,11 @@ Going with our idea that a PiNN is sparse data + physics, we'll remove all but 5
   |    3.2  |  6.604112216  |  -9.243313604  |  11.36015601  |  25.11380976  |  23.69779604  |
   |    4.7  |  5.168032133  |  -20.42674118  |  21.07036572  |  34.0088771  |  0.827816308  |
 
-  Here is a plot of the $(x,y)$ points for each point:
+  Here is a plot of these 5 $(x,y)$ points:
 
   ![Figure 2](https://github.com/tbensky/PiNN_Projectile/blob/main/System/trajectory5.jpg?)
+
+  These are the only points we'll use to train the neural network.
 
 
 ## Physics
