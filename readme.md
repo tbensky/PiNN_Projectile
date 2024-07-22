@@ -75,7 +75,7 @@ Here, $C$ is the drag coefficient, $g$ is gravity $(=9.8 m/s^2)$, and we'll put 
 ## Goal
 
 
-The goal here is to use a PiNN to find a smooth curve that agrees with the numerical integration result. We'll insiston training the network on only the 5 data points shown and the differential equations given for $a_x$ and $a_y$.
+The goal here is to use a PiNN to find a smooth curve that agrees with the numerical integration result. We'll insist on training the network on only the 5 data points shown and the differential equations given for $a_x$ and $a_y$.
 
 # The neural network
 
