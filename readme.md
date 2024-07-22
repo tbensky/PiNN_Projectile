@@ -327,6 +327,8 @@ that followed this loss profile
 
 ![Figure 15](https://github.com/tbensky/PiNN_Projectile/blob/main/KeepResults/05-19Jul_good_results/loss.png)
 
+Here is a [video](https://youtu.be/0wlHa1-M7kw) showing the training results as a function of epoch.
+
 # Uses
 
 With a neural network trained on a projectile, we now have a model we may interrogate in various ways. Here's a couple of plots that ramp the time value (input to the network), while plotting both x and y positions. Another plots $v_x$ and $v_y$.
