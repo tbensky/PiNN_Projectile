@@ -145,7 +145,9 @@ def L(self,data,outputs,targets):
             #u_xx = torch.autograd.grad(u_x, x_in, grad_outputs=torch.ones_like(u_x[0]), create_graph=True, retain_graph=True)
             
             
+            #compute the first derivative of the network's outputs with respoect to the inputs (x_in)
             u_x = self.compute_ux(x_in)
+            #now compute the second derivative by computing one derivative of u_x (the first derivative)
             u_xx = torch.autograd.functional.jacobian(self.compute_ux, x_in,create_graph=True)
         
             #compute the instantaenous speed
