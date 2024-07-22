@@ -319,14 +319,14 @@ Thoughts:
   
 We tried many things like changing the network depth and width, and how the physics vs data losses were weighted in the total loss.  Nothing seemed to work.
 
-Upon reviewing our code, we noticed that there may be two ways to find the first derivative of the x and y positions (which are $v_x$ and $v_y$). These are critial in order to compute the physics loss, as shown in the equations above.
+Upon reviewing our code, we noticed that there may be two ways to find the first derivative of the x and y positions (which are $v_x$ and $v_y$). These are critical in order to compute the physics loss (see the equations above).
 
 In our code, we have the line
 
 ```python
  u_x = self.compute_ux(x_in)
 ```
-which computes the first derivative of the network's ouput with respect to the input (which is time).  Since output neurons 0 and 1 are mapped to the x and y positions of the projectile, we thought "why not use `u_x[0]` for $v_x$ and `u_x[1]` for $v_y$?  Thus changing our code to find $v_x$ and $v_y$ from
+which computes the first derivative of the network's ouput with respect to the input (which is time).  Since output neurons 0 and 1 are mapped to the x and y positions of the projectile, we thought "why not use `u_x[0]` for $v_x$ and `u_x[1]` for $v_y$?"  Thus changing our code to find $v_x$ and $v_y$ from
 
 ```python
 vx = y_out[2]
@@ -338,7 +338,7 @@ vx = u_x[0]
 vy = u_x[1]
 ```
 
-In other words, take $v_x$ and $v_y$ from the autodifferentiation results of the network itself (not our network-declared output neurons for $v_x$ and $v_y$). 
+In other words, use $v_x$ and $v_y$ from the *autodifferentiation* results of the network, not our network-declared output neurons for $v_x$ and $v_y$. 
 
 This really seemed to help. Here is a result after about 6000 epochs
 
