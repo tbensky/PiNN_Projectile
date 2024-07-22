@@ -338,6 +338,6 @@ With a neural network trained on a projectile, we now have a model we may interr
 
 
 # References
- * [https://www.youtube.com/watch?v=IDIv92Z6Qvc](https://www.youtube.com/watch?v=IDIv92Z6Qvc)
+ * [ETH Zürich DLSC: Physics-Informed Neural Networks - Applications](https://www.youtube.com/watch?v=IDIv92Z6Qvc)
 
 * [Wang, et.al.](https://arxiv.org/pdf/2308.08468)
