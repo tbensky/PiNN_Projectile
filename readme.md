@@ -343,6 +343,8 @@ that followed this loss profile
 
 ## Here is a video showing the training results as a function of epoch
 
+[![Img alt text](https://img.youtube.com/vi/0wlHa1-M7kw/0.jpg)](https://www.youtube.com/watch?v=0wlHa1-M7kw)
+
 [![Watch a training video](https://img.youtube.com/vi/0wlHa1-M7kw/default.jpg)](https://youtu.be/nTQUwghvy5Q](https://www.youtube.com/watch?v=0wlHa1-M7kw))
 
 # Uses
